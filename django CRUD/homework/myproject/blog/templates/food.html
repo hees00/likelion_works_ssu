@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for food in foods.all %}
+        <div>
+            <h1>{{food.title}}</h1>
+            <p>{{food.locate}}</p>
+            <p>점수:{{food.score}}</p>
+            <p>{{food.pub_date}}</p>
+            <p>{{food.body}}</p>
+        </div>
+    {% endfor %}
+
+{% endblock %}
