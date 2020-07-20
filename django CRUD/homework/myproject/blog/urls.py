@@ -8,4 +8,5 @@ urlpatterns=[
     path('<int:blog_id>/delete',views.delete,name= 'delete'),
     path('<int:blog_id>/update',views.update,name= 'update'),
     path('food/',views.food,name='food'),
+    path('fake/',views.fake,name='fake'),
 ]

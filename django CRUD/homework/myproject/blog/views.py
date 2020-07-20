@@ -2,6 +2,19 @@ from django.shortcuts import render, get_object_or_404,redirect
 from .models import Blog,Food
 from django.utils import timezone
 from .forms import BlogUpdate
+from django.core.paginator import Paginator
+from faker import Faker
+
+def fake(request):
+    for i in range(10):
+        blog=Blog()
+        myfake = Faker()
+        blog.title=myfake.name()
+        blog.body=myfake.sentence()
+        blog.pub_date=timezone.datetime.now()
+        blog.save()
+    return redirect('/')
+
 
 def food(request):
     foods= Food.objects
@@ -9,7 +22,12 @@ def food(request):
 
 def blog(request):
     blogs= Blog.objects
-    return render(request, 'blog.html',{'blogs':blogs})
+
+    blog_list = Blog.objects.all()  
+    paginator = Paginator(blog_list,10)  
+    page= request.GET.get('page')
+    articles= paginator.get_page(page)  
+    return render(request, 'blog.html',{'blogs':blogs,'articles':articles})
 
 def detail(request,blog_id):
     blog_detail=get_object_or_404(Blog,pk=blog_id)
