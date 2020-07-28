@@ -4,7 +4,7 @@
     {% for blog in articles %}
         <div>
             <h1>{{blog.title}}</h1>
-            <p>{{blog.pub_date}}</p>
+            <p>{{blog.pub_date}}       By.{{blog.auther}} </p>
             <p>{{blog.summary}}<a href="{% url 'detail' blog.id %}">...more</a></p>
         </div>
     {% endfor %}
@@ -23,5 +23,50 @@
         <a href="?page={{articles.paginater.num_pages}}">Last</a>
     {% endif %}
 
+    <br>
+    <div id="map" style="width:auto;height:400px;"></div>
+    <p>
+        <button onclick="setCenter()">지도 중심좌표 이동시키기</button> 
+        <button onclick="panTo()">지도 중심좌표 부드럽게 이동시키기</button> 
+    </p>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=비밀.."></script>
+    <script>
+		var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(37.5620765,126.9240941),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+        var markerPosition  = new kakao.maps.LatLng(37.5620765,126.92409418); 
+
+// 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+        position: markerPosition
+        });
+
+// 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+
+// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+// marker.setMap(null);    
+        function setCenter() {            
+    // 이동할 위도 경도 위치를 생성합니다 
+            var moveLatLon = new kakao.maps.LatLng(37.5620765,126.92409418);
+    
+    // 지도 중심을 이동 시킵니다
+             map.setCenter(moveLatLon);
+}
+
+    function panTo() {
+    // 이동할 위도 경도 위치를 생성합니다 
+            var moveLatLon = new kakao.maps.LatLng(37.5620765,126.9240941);
+    
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+            map.panTo(moveLatLon);            
+}        
+    
+    </script>
 
 {% endblock %}

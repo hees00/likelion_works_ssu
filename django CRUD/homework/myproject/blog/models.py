@@ -4,6 +4,7 @@ class Blog(models.Model):
     title= models.CharField(max_length=200)
     pub_date=models.DateTimeField('date published')
     body = models.TextField()
+    auther = models.CharField(max_length=100,default="ssu")
 
     def __str__(self):
         return self.title
